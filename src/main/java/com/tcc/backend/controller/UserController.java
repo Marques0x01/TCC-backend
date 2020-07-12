@@ -25,7 +25,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ROLE_USER')")
   public UserDto getById(@PathVariable Long id){
     User user =  userService.findById(id);
     return UserDto.from(user);

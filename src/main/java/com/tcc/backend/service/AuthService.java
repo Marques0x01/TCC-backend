@@ -3,6 +3,7 @@ package com.tcc.backend.service;
 import com.tcc.backend.dto.UserBasicDataDTO;
 import com.tcc.backend.dto.UserLoginDTO;
 import com.tcc.backend.exception.CustomException;
+import com.tcc.backend.model.Role;
 import com.tcc.backend.model.User;
 import com.tcc.backend.repository.AddressRepository;
 import com.tcc.backend.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class AuthService {
@@ -48,8 +51,8 @@ public class AuthService {
     public UserBasicDataDTO signup(User user) {
         if (!userRepository.existsByEmail(user.getEmail())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList(Role.ROLE_USER));
             userRepository.save(user);
-            addressRepository.saveAll(user.getAddress());
             UserBasicDataDTO userDto = UserBasicDataDTO.from(user);
             userDto.setToken(jwtTokenProvider.createToken(user.getEmail(), user.getRoles()));
             return  userDto;

@@ -19,10 +19,10 @@ public class User {
   private String name;
   @Column(unique = true, nullable = false)
   private String email;
-  @Column(unique = true, nullable = false)
-  private String cpf;
   @Column(nullable = false)
   private String password;
+  @Column(unique = true)
+  private String cpf;
   @Column(unique = true)
   private String phoneNumber;
   @Enumerated(EnumType.STRING)
