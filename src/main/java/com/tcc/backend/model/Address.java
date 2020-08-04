@@ -23,8 +23,8 @@ public class Address {
     private String city;
     private String state;
     private String country;
+    @OneToMany(mappedBy = "address")
+    private List<Product> products;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "address")
     private List<User> user;
-    @OneToMany(mappedBy = "address")
-    private List<Advertising> advertising;
 }

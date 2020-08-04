@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Advertising {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +22,20 @@ public class Advertising {
     private String title;
     private String description;
     private Double price;
-//    PICTURE
+    private RentType rentType;
+    private String zipCode;
+    private Boolean isPhoneVisible;
+    @OneToMany(mappedBy = "product")
+    private List<Image> images;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Address address;
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)
-    private AdvertisingStatus status;
-    @OneToMany(mappedBy = "advertising")
+    private ProductStatus status;
+    @OneToMany(mappedBy = "product")
     private List<Complaint> complaints;
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

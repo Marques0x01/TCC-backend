@@ -1,7 +1,7 @@
 package com.tcc.backend.dto;
 
 import com.tcc.backend.model.Address;
-import com.tcc.backend.model.Advertising;
+import com.tcc.backend.model.Product;
 import com.tcc.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +22,7 @@ public class AddressWithoutObjDTO {
     private String state;
     private String country;
     private List<Long> userIds;
-    private List<Long> advertisingIds;
+    private List<Long> productIds;
 
 
     public static AddressWithoutObjDTO from(Address address){
@@ -38,7 +38,7 @@ public class AddressWithoutObjDTO {
                 .state(address.getState())
                 .country(address.getCountry())
                 .userIds(address.getUser().stream().map(User::getId).collect(Collectors.toList()))
-                .advertisingIds(address.getAdvertising().stream().map(Advertising::getId).collect(Collectors.toList()))
+                .productIds(address.getProducts().stream().map(Product::getId).collect(Collectors.toList()))
                 .build();
     }
 

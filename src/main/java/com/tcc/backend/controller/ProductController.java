@@ -1,7 +1,7 @@
 package com.tcc.backend.controller;
 
-import com.tcc.backend.model.Advertising;
-import com.tcc.backend.repository.AdvertisingRepository;
+import com.tcc.backend.model.Product;
+import com.tcc.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/avertising")
-public class AdvertisingController {
+public class ProductController {
 
     @Autowired
-    private AdvertisingRepository advertisingRepository;
+    private ProductRepository advertisingRepository;
 
     @PostMapping
-    public Advertising save(Advertising advertising){
-        advertisingRepository.save(advertising);
-        return advertising;
+    public Product save(Product product){
+        advertisingRepository.save(product);
+        return product;
     }
 }

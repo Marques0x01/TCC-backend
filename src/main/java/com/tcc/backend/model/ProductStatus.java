@@ -1,5 +1,5 @@
 package com.tcc.backend.model;
 
-public enum AdvertisingStatus {
+public enum ProductStatus {
     ACTIVE, INACTIVE, REMOVED;
 }

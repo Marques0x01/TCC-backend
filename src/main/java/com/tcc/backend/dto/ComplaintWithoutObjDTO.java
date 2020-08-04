@@ -1,8 +1,6 @@
 package com.tcc.backend.dto;
 
-import com.tcc.backend.model.Advertising;
 import com.tcc.backend.model.Complaint;
-import com.tcc.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +27,7 @@ public class ComplaintWithoutObjDTO {
 
         return ComplaintWithoutObjDTO.builder()
                 .id(complaint.getId())
-                .advertisingId(complaint.getAdvertising().getId())
+                .advertisingId(complaint.getProduct().getId())
                 .description(complaint.getDescription())
                 .userId(complaint.getUser().getId())
                 .date(complaint.getDate())

@@ -17,6 +17,8 @@ public class User {
   private Long id;
   @Column(nullable = false)
   private String name;
+  @Column(nullable = false)
+  private String lastName;
   @Column(unique = true, nullable = false)
   private String email;
   @Column(nullable = false)
@@ -38,13 +40,13 @@ public class User {
   private List<Address> address;
 
   @OneToMany(mappedBy = "user")
-  private List<Advertising> advertisings;
+  private List<Product> products;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_favorites",
           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
           inverseJoinColumns = @JoinColumn(name = "advertising_id", referencedColumnName = "id"))
-  private List<Advertising> favorites;
+  private List<Product> favorites;
 
   @OneToMany(mappedBy = "user")
   private List<Complaint> complaints;

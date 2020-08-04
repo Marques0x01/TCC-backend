@@ -18,7 +18,7 @@ public class UserController {
   private UserService userService;
 
   @GetMapping
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ROLE_USER')")
   public List<UserDto> getAll(){
     List<User> users = userService.findAll();
     return users.stream().map(UserDto::from).collect(Collectors.toList());

@@ -1,9 +1,9 @@
 package com.tcc.backend.repository;
 
-import com.tcc.backend.model.Advertising;
+import com.tcc.backend.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdvertisingRepository extends JpaRepository<Advertising, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 }

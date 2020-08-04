@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class UserRegisterDTO {
 
   private String name;
+  private String lastName;
   private String email;
   private String password;
 
@@ -24,6 +25,7 @@ public class UserRegisterDTO {
 
     return UserRegisterDTO.builder()
             .name(user.getName())
+            .lastName(user.getLastName())
             .email(user.getEmail())
             .password(user.getPassword())
             .build();
@@ -39,6 +41,7 @@ public class UserRegisterDTO {
 
     return User.builder()
             .name(userDto.name)
+            .lastName(userDto.lastName)
             .email(userDto.email)
             .password(userDto.password)
             .build();
