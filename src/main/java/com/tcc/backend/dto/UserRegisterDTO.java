@@ -18,7 +18,7 @@ public class UserRegisterDTO {
   private String email;
   private String password;
 
-  public static UserRegisterDTO from(User user){
+  public static UserRegisterDTO convertToModel(User user){
     if(user == null){
       return null;
     }
@@ -31,7 +31,7 @@ public class UserRegisterDTO {
             .build();
   }
 
-  public static User to(UserRegisterDTO userDto){
+  public static User convertToDto(UserRegisterDTO userDto){
 
     if(userDto == null){
       return null;

@@ -25,7 +25,7 @@ public class ProductWithoutObjDTO {
     private Long userId;
     private List<Long> userFavoritesId;
 
-    public static ProductWithoutObjDTO from(Product product) {
+    public static ProductWithoutObjDTO convertToDto(Product product) {
         if (product == null) {
             return null;
         }
@@ -38,8 +38,24 @@ public class ProductWithoutObjDTO {
                 .category(product.getCategory())
                 .status(product.getStatus())
                 .complaintIds(product.getComplaints().stream().map(Complaint::getId).collect(Collectors.toList()))
-                .userId(product.getUser().getId())
+                .userId(product.getUser() == null ? null : product.getUser().getId())
                 .userFavoritesId(product.getUserFavorites().stream().map(User::getId).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Product convertToModel(ProductWithoutObjDTO dto){
+        if(dto == null) {
+            return null;
+        }
+
+        return Product.builder()
+                .id(dto.id)
+                .title(dto.title)
+                .description(dto.description)
+                .price(dto.price)
+                .category(dto.category)
+                .status(dto.status)
+                // TODO FINISH THIS LATER
                 .build();
     }
 }

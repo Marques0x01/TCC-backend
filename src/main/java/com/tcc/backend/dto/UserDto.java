@@ -40,9 +40,9 @@ public class UserDto {
                 .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
                 .roles(user.getRoles())
-                .address(user.getAddress().stream().map(AddressWithoutObjDTO::from).collect(Collectors.toList()))
-                .advertisings(user.getProducts().stream().map(ProductWithoutObjDTO::from).collect(Collectors.toList()))
-                .favorites(user.getFavorites().stream().map(ProductWithoutObjDTO::from).collect(Collectors.toList()))
+                .address(user.getAddress().stream().map(AddressWithoutObjDTO::convertToDto).collect(Collectors.toList()))
+                .advertisings(user.getProducts().stream().map(ProductWithoutObjDTO::convertToDto).collect(Collectors.toList()))
+                .favorites(user.getFavorites().stream().map(ProductWithoutObjDTO::convertToDto).collect(Collectors.toList()))
                 .complaints(user.getComplaints().stream().map(ComplaintWithoutObjDTO::from).collect(Collectors.toList()))
                 .build();
     }

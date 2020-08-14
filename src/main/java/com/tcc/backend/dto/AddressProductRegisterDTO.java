@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @Builder
-public class AddressWithoutObjDTO {
-
+public class AddressProductRegisterDTO {
     private Long id;
     private String zipCode;
     private String street;
@@ -23,38 +22,35 @@ public class AddressWithoutObjDTO {
     private String state;
     private String country;
     private List<Long> userIds;
-    private List<Long> productIds;
 
-
-    public static AddressWithoutObjDTO convertToDto(Address address){
+    public static AddressProductRegisterDTO convertToDto(Address address){
         if(address == null){
             return null;
         }
 
-        return AddressWithoutObjDTO.builder()
+        return AddressProductRegisterDTO.builder()
                 .id(address.getId())
                 .zipCode(address.getZipCode())
                 .district(address.getDistrict())
                 .city(address.getCity())
                 .state(address.getState())
                 .country(address.getCountry())
-                .userIds(address.getUser().stream().map(User::getId).collect(Collectors.toList()))
-                .productIds(address.getProducts().stream().map(Product::getId).collect(Collectors.toList()))
+                .userIds(address.getUser() != null ? address.getUser().stream().map(User::getId).collect(Collectors.toList()) : null)
                 .build();
     }
 
-    public static Address convertToModel(AddressWithoutObjDTO addressWithoutObjDTO){
-        if(addressWithoutObjDTO == null){
+    public static Address convertToModel(AddressProductRegisterDTO addressProductRegisterDTO){
+        if(addressProductRegisterDTO == null){
             return null;
         }
 
         return Address.builder()
-                .id(addressWithoutObjDTO.getId())
-                .zipCode(addressWithoutObjDTO.getZipCode())
-                .district(addressWithoutObjDTO.getDistrict())
-                .city(addressWithoutObjDTO.getCity())
-                .state(addressWithoutObjDTO.getState())
-                .country(addressWithoutObjDTO.getCountry())
+                .id(addressProductRegisterDTO.getId())
+                .zipCode(addressProductRegisterDTO.getZipCode())
+                .district(addressProductRegisterDTO.getDistrict())
+                .city(addressProductRegisterDTO.getCity())
+                .state(addressProductRegisterDTO.getState())
+                .country(addressProductRegisterDTO.getCountry())
                 .build();
     }
 }

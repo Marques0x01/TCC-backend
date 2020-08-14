@@ -22,21 +22,21 @@ public class Product {
     private String title;
     private String description;
     private Double price;
-    private RentType rentType;
-    private String zipCode;
     private Boolean isPhoneVisible;
     @OneToMany(mappedBy = "product")
     private List<Image> images;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "address_id")
     private Address address;
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)
+    private RentType rentType;
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
     @OneToMany(mappedBy = "product")
     private List<Complaint> complaints;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "favorites")

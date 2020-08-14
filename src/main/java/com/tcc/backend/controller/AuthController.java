@@ -4,7 +4,6 @@ import com.tcc.backend.dto.UserBasicDataDTO;
 import com.tcc.backend.dto.UserLoginDTO;
 import com.tcc.backend.dto.UserRegisterDTO;
 import com.tcc.backend.service.AuthService;
-import com.tcc.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +24,6 @@ public class AuthController {
 
     @PostMapping("/signup")
     public UserBasicDataDTO signup(@RequestBody UserRegisterDTO user) {
-        return authService.signup(UserRegisterDTO.to(user));
+        return authService.signup(UserRegisterDTO.convertToDto(user));
     }
 }

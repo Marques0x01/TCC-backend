@@ -13,9 +13,11 @@ import java.util.List;
 @Builder
 public class UserBasicDataDTO {
 
+    private Long id;
     private String name;
     private String email;
     private List<Role> roles;
+    private Boolean isActive;
     private String token;
 
     public static UserBasicDataDTO from(User user){
@@ -24,8 +26,10 @@ public class UserBasicDataDTO {
         }
 
         return UserBasicDataDTO.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .isActive(user.getIsActive())
                 .roles(user.getRoles())
                 .build();
     }
@@ -37,8 +41,10 @@ public class UserBasicDataDTO {
         }
 
         return User.builder()
+                .id(userDto.id)
                 .name(userDto.name)
                 .email(userDto.email)
+                .isActive(userDto.isActive)
                 .roles(userDto.roles)
                 .build();
     }

@@ -27,6 +27,7 @@ public class User {
   private String cpf;
   @Column(unique = true)
   private String phoneNumber;
+  private Boolean isActive;
   @Enumerated(EnumType.STRING)
   private UserStatus status;
   @ElementCollection(fetch = FetchType.EAGER)
