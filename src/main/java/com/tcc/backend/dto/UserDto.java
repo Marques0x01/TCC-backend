@@ -22,7 +22,7 @@ public class UserDto {
     private String phoneNumber;
     private UserStatus status;
     private List<Role> roles;
-    private List<AddressWithoutObjDTO> address;
+    private AddressWithoutObjDTO address;
     private List<ProductWithoutObjDTO> advertisings;
     private List<ProductWithoutObjDTO> favorites;
     private List<ComplaintWithoutObjDTO> complaints;
@@ -40,7 +40,7 @@ public class UserDto {
                 .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
                 .roles(user.getRoles())
-                .address(user.getAddress().stream().map(AddressWithoutObjDTO::convertToDto).collect(Collectors.toList()))
+                .address(AddressWithoutObjDTO.convertToDto(user.getAddress()))
                 .advertisings(user.getProducts().stream().map(ProductWithoutObjDTO::convertToDto).collect(Collectors.toList()))
                 .favorites(user.getFavorites().stream().map(ProductWithoutObjDTO::convertToDto).collect(Collectors.toList()))
                 .complaints(user.getComplaints().stream().map(ComplaintWithoutObjDTO::from).collect(Collectors.toList()))

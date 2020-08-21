@@ -14,14 +14,29 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cc.tcc.alphaville@gmail.com
+    password: cc.tcc123
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls:
+        enable: true
+      ssl:
+        trust: smtp.gmail.com
 
 server:
-  port: 8080 # This is the default port anyway, but you can change it here
+  port: 8080
 
 security:
   jwt:
     token:
       secret-key: secret-key
       expire-length: 3000000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
+
+
 
 

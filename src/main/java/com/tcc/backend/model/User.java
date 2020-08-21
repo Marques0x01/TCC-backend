@@ -27,18 +27,16 @@ public class User {
   private String cpf;
   @Column(unique = true)
   private String phoneNumber;
-  private Boolean isActive;
+  private String gender;
   @Enumerated(EnumType.STRING)
   private UserStatus status;
   @ElementCollection(fetch = FetchType.EAGER)
   @Enumerated(EnumType.STRING)
   private List<Role> roles;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "user_address",
-          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
-  private List<Address> address;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "address_id")
+  private Address address;
 
   @OneToMany(mappedBy = "user")
   private List<Product> products;

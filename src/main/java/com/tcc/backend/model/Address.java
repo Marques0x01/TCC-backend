@@ -20,11 +20,13 @@ public class Address {
     private Long id;
     private String zipCode;
     private String district;
+    private Long number;
+    private String complement;
     private String city;
     private String state;
     private String country;
     @OneToMany(mappedBy = "address")
     private List<Product> products;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "address")
-    private List<User> user;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "address")
+    private User user;
 }

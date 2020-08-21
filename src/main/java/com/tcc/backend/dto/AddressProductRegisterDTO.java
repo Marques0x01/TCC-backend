@@ -21,7 +21,7 @@ public class AddressProductRegisterDTO {
     private String city;
     private String state;
     private String country;
-    private List<Long> userIds;
+    private Long userId;
 
     public static AddressProductRegisterDTO convertToDto(Address address){
         if(address == null){
@@ -35,7 +35,7 @@ public class AddressProductRegisterDTO {
                 .city(address.getCity())
                 .state(address.getState())
                 .country(address.getCountry())
-                .userIds(address.getUser() != null ? address.getUser().stream().map(User::getId).collect(Collectors.toList()) : null)
+                .userId(address.getUser() != null ? address.getUser().getId() : null)
                 .build();
     }
 

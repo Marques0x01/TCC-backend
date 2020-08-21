@@ -1,6 +1,7 @@
 package com.tcc.backend.controller;
 
 import com.tcc.backend.dto.UserDto;
+import com.tcc.backend.dto.UserViewDTO;
 import com.tcc.backend.model.User;
 import com.tcc.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,16 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_USER')")
-  public UserDto getById(@PathVariable Long id){
+  public UserViewDTO getById(@PathVariable Long id){
     User user =  userService.findById(id);
-    return UserDto.from(user);
+    return UserViewDTO.convertToDto(user);
+  }
+
+  @PutMapping
+  public UserViewDTO update(@RequestBody UserViewDTO dto){
+    User user = UserViewDTO.convertToModel(dto);
+    User response = userService.update(user);
+    return UserViewDTO.convertToDto(response);
   }
 
 }

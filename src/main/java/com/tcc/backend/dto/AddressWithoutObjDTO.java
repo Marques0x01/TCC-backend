@@ -22,7 +22,7 @@ public class AddressWithoutObjDTO {
     private String city;
     private String state;
     private String country;
-    private List<Long> userIds;
+    private Long userId;
     private List<Long> productIds;
 
 
@@ -38,7 +38,7 @@ public class AddressWithoutObjDTO {
                 .city(address.getCity())
                 .state(address.getState())
                 .country(address.getCountry())
-                .userIds(address.getUser().stream().map(User::getId).collect(Collectors.toList()))
+                .userId(address.getUser().getId())
                 .productIds(address.getProducts().stream().map(Product::getId).collect(Collectors.toList()))
                 .build();
     }

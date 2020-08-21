@@ -18,9 +18,10 @@ public class UserBasicDataDTO {
     private String email;
     private List<Role> roles;
     private Boolean isActive;
+    private String phoneNumber;
     private String token;
 
-    public static UserBasicDataDTO from(User user){
+    public static UserBasicDataDTO convertToDto(User user){
         if(user == null){
             return null;
         }
@@ -29,12 +30,12 @@ public class UserBasicDataDTO {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .isActive(user.getIsActive())
+                .phoneNumber(user.getPhoneNumber())
                 .roles(user.getRoles())
                 .build();
     }
 
-    public static User to(UserBasicDataDTO userDto){
+    public static User convertToModel(UserBasicDataDTO userDto){
 
         if(userDto == null){
             return null;
@@ -44,7 +45,6 @@ public class UserBasicDataDTO {
                 .id(userDto.id)
                 .name(userDto.name)
                 .email(userDto.email)
-                .isActive(userDto.isActive)
                 .roles(userDto.roles)
                 .build();
     }

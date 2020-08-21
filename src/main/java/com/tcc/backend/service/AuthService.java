@@ -40,7 +40,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
             User user = userRepository.findByEmail(userLogin.getEmail());
-            UserBasicDataDTO userData = UserBasicDataDTO.from(user);
+            UserBasicDataDTO userData = UserBasicDataDTO.convertToDto(user);
             userData.setToken(jwtTokenProvider.createToken(userLogin.getEmail(), userRepository.findByEmail(userLogin.getEmail()).getRoles()));
             return userData;
         } catch (AuthenticationException e) {
@@ -53,7 +53,7 @@ public class AuthService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList(Role.ROLE_USER));
             userRepository.save(user);
-            UserBasicDataDTO userDto = UserBasicDataDTO.from(user);
+            UserBasicDataDTO userDto = UserBasicDataDTO.convertToDto(user);
             userDto.setToken(jwtTokenProvider.createToken(user.getEmail(), user.getRoles()));
             return  userDto;
         } else {

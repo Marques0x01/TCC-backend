@@ -49,4 +49,15 @@ public class UserService {
     List<User> users = ids.stream().map(id -> userRepository.findById(id).orElse(null)).collect(Collectors.toList());
     return users.stream().filter(user -> user != null).collect(Collectors.toList());
   }
+
+  public User update(User user) {
+    if(!userRepository.findById(user.getId()).isPresent()){
+      return null;
+    }
+    User model = userRepository.findById(user.getId()).get();
+    model.setCpf(user.getCpf());
+    model.setPhoneNumber(user.getPhoneNumber());
+    model.setGender(user.getGender());
+    return userRepository.save(model);
+  }
 }

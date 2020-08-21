@@ -3,10 +3,7 @@ package com.tcc.backend.service;
 import com.tcc.backend.dto.AddressProductRegisterDTO;
 import com.tcc.backend.dto.ProductRegisterDTO;
 import com.tcc.backend.dto.ProductWithoutObjDTO;
-import com.tcc.backend.model.Address;
-import com.tcc.backend.model.Image;
-import com.tcc.backend.model.Product;
-import com.tcc.backend.model.User;
+import com.tcc.backend.model.*;
 import com.tcc.backend.repository.AddressRepository;
 import com.tcc.backend.repository.ImageRepository;
 import com.tcc.backend.repository.ProductRepository;
@@ -37,6 +34,7 @@ public class ProductService {
 
     public ProductRegisterDTO saveProduct(ProductRegisterDTO product) throws IOException {
             Product productModel = ProductRegisterDTO.convertToModel(product);
+            productModel.setStatus(ProductStatus.ACTIVE);
             Address address = AddressProductRegisterDTO.convertToModel(product.getAddress());
             User user = userRepository.findById(product.getUserId()).orElse(null);
             productModel.setUser(user);
@@ -47,28 +45,11 @@ public class ProductService {
         return ProductRegisterDTO.convertToDto(productRepository.save(productModel));
     }
 
-    public ProductWithoutObjDTO getById(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
-        return ProductWithoutObjDTO.convertToDto(product);
+    public Product getById(Long id) {
+        return productRepository.findById(id).orElse(null);
     }
 
-
-
-    public static byte[] compressBytes(byte[] data) {
-        Deflater deflater = new Deflater();
-        deflater.setInput(data);
-        deflater.finish();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        while (!deflater.finished()) {
-            int count = deflater.deflate(buffer);
-            outputStream.write(buffer, 0, count);
-        }
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-        }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
-        return outputStream.toByteArray();
+    public List<Product> getAll() {
+        return productRepository.findAll();
     }
 }
