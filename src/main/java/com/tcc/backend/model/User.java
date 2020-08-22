@@ -3,7 +3,10 @@ package com.tcc.backend.model;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Builder
@@ -51,4 +54,6 @@ public class User {
 
   @OneToMany(mappedBy = "user")
   private List<Complaint> complaints;
+  
+ 
 }

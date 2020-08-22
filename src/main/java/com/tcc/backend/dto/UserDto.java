@@ -1,13 +1,18 @@
 package com.tcc.backend.dto;
 
-import com.tcc.backend.model.*;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+import com.tcc.backend.model.Role;
+import com.tcc.backend.model.User;
+import com.tcc.backend.model.UserStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -45,5 +50,13 @@ public class UserDto {
                 .favorites(user.getFavorites().stream().map(ProductWithoutObjDTO::convertToDto).collect(Collectors.toList()))
                 .complaints(user.getComplaints().stream().map(ComplaintWithoutObjDTO::from).collect(Collectors.toList()))
                 .build();
+    }
+    
+    public String newPassword() {
+        byte[] array = new byte[7]; 
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+     
+        return generatedString;
     }
 }

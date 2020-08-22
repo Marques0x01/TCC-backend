@@ -41,8 +41,8 @@ public class SendingEmailServiceImpl implements SendingEmailService {
 
         Map model = new HashMap();
         model.put("name", mailModel.getName());
-        model.put("location", "Sri Lanka");
-        model.put("signature", "https://techmagister.info");
+        model.put("location", "São Paulo");
+        model.put("signature", "Aluga Aqui");
         model.put("content", mailModel.getContent());
 
         /**

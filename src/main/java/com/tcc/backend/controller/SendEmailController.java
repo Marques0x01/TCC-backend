@@ -3,18 +3,24 @@ package com.tcc.backend.controller;
 
 
 
-import com.tcc.backend.model.MailModel;
-import com.tcc.backend.service.SendingEmailService;
-import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 
 import javax.mail.MessagingException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.tcc.backend.model.MailModel;
+import com.tcc.backend.service.AuthService;
+import com.tcc.backend.service.SendingEmailService;
+
+import freemarker.template.TemplateException;
 
 @CrossOrigin(
         allowCredentials = "true",
@@ -28,6 +34,9 @@ public class SendEmailController {
 
     @Autowired
     private SendingEmailService sendingEmailService;
+    
+    @Autowired
+    private AuthService authService;
 
     @PostMapping
     public ResponseEntity<?> restPostLoanRequest(@RequestBody MailModel mailModel) {
