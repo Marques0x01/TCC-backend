@@ -66,7 +66,7 @@ public class SendingEmailServiceImpl implements SendingEmailService {
         mimeMessageHelper.setTo(mailModel.getTo());
         mimeMessageHelper.setText(html, true);
         mimeMessageHelper.setSubject(mailModel.getSubject());
-        mimeMessageHelper.setFrom(mailModel.getFrom());
+       
 
 
         emailSender.send(message);

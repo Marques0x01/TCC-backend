@@ -12,7 +12,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class MailModel {
 
-    private String from;
+ 
     private String to;
     private String name;
     private String subject;

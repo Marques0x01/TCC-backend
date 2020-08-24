@@ -36,7 +36,8 @@ public class User {
   @ElementCollection(fetch = FetchType.EAGER)
   @Enumerated(EnumType.STRING)
   private List<Role> roles;
-
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  private TokenVerification verificationToken;
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_address",
           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
