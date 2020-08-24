@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tcc.backend.model.MailModel;
+import com.tcc.backend.model.TokenVerification;
+import com.tcc.backend.model.User;
+import com.tcc.backend.repository.TokenVerificationRepository;
 import com.tcc.backend.service.AuthService;
 import com.tcc.backend.service.SendingEmailService;
+import com.tcc.backend.service.UserService;
 
 import freemarker.template.TemplateException;
 
@@ -37,6 +41,14 @@ public class SendEmailController {
     
     @Autowired
     private AuthService authService;
+    
+    @Autowired
+    private UserService userService;
+    
+   
+    
+    @Autowired
+    private TokenVerificationRepository tokenVerificationRepository;
 
     @PostMapping
     public ResponseEntity<?> restPostLoanRequest(@RequestBody MailModel mailModel) {
@@ -46,7 +58,11 @@ public class SendEmailController {
 
         try {
             sendingEmailService.sendEmail(mailModel);
+            User user = userService.findByEmail(mailModel.getTo());
+            TokenVerification token = new TokenVerification(user);
+            tokenVerificationRepository.save(token);
             return ResponseEntity.ok().body(mailModel.toString());
+            
         } catch (MessagingException e) {
             e.printStackTrace();
             return ResponseEntity.ok().body(e.getMessage());

@@ -1,29 +1,23 @@
 package com.tcc.backend.service;
 
-import com.tcc.backend.dto.UserBasicDataDTO;
-import com.tcc.backend.dto.UserEmailDto;
-import com.tcc.backend.dto.UserLoginDTO;
-import com.tcc.backend.exception.CustomException;
-import com.tcc.backend.model.User;
-import com.tcc.backend.repository.AddressRepository;
-import com.tcc.backend.repository.UserRepository;
-import com.tcc.backend.security.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
-
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.tcc.backend.exception.CustomException;
+import com.tcc.backend.model.User;
+import com.tcc.backend.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -57,6 +51,25 @@ public class UserService {
     return users.stream().filter(user -> user != null).collect(Collectors.toList());
   }
   
+  
+  public User findByEmail(String email) {
+	  if(email == null) {
+		  
+		  throw new NullPointerException("Email can not be null");
+	  
+	 
+	  }else {
+		  User user = userRepository.findByEmail(email);
+		  
+		  if(Objects.isNull(user)){
+		      throw new EntityNotFoundException("User not found");
+		  }
+		  
+		  return user;
+	  }
+	  
+  }
+  
   public void setNewPassword(String email) {
 		if (userRepository.existsByEmail(email)) {
 
@@ -74,5 +87,7 @@ public class UserService {
 		}
 	}
   
+  
+ 
   
 }
