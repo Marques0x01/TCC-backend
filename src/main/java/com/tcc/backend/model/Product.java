@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,7 @@ public class Product {
     private String description;
     private Double price;
     private Boolean isPhoneVisible;
+    private Timestamp creationDate;
     @OneToMany(mappedBy = "product")
     private List<Image> images;
     @ManyToOne(cascade=CascadeType.PERSIST)

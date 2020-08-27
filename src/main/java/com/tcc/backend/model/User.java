@@ -49,4 +49,7 @@ public class User {
 
   @OneToMany(mappedBy = "user")
   private List<Complaint> complaints;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  private TokenVerification verificationToken;
 }

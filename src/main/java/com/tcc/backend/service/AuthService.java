@@ -5,6 +5,7 @@ import com.tcc.backend.dto.UserLoginDTO;
 import com.tcc.backend.exception.CustomException;
 import com.tcc.backend.model.Role;
 import com.tcc.backend.model.User;
+import com.tcc.backend.model.UserStatus;
 import com.tcc.backend.repository.AddressRepository;
 import com.tcc.backend.repository.UserRepository;
 import com.tcc.backend.security.JwtTokenProvider;
@@ -52,6 +53,7 @@ public class AuthService {
         if (!userRepository.existsByEmail(user.getEmail())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList(Role.ROLE_USER));
+            user.setStatus(UserStatus.PENDING);
             userRepository.save(user);
             UserBasicDataDTO userDto = UserBasicDataDTO.convertToDto(user);
             userDto.setToken(jwtTokenProvider.createToken(user.getEmail(), user.getRoles()));

@@ -1,21 +1,15 @@
 package com.tcc.backend.controller;
 
-import com.tcc.backend.dto.ProductBasicDataDTO;
-import com.tcc.backend.dto.ProductViewDTO;
-import com.tcc.backend.dto.ProductRegisterDTO;
-import com.tcc.backend.dto.ProductWithoutObjDTO;
+import com.tcc.backend.dto.*;
 import com.tcc.backend.model.Product;
-import com.tcc.backend.repository.ImageRepository;
+import com.tcc.backend.dto.ProductSearchDTO;
 import com.tcc.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.zip.DataFormatException;
-import java.util.zip.Inflater;
 
 @RestController
 @RequestMapping("/product")
@@ -42,6 +36,13 @@ public class ProductController {
             return null;
         }
         return ProductBasicDataDTO.convertToDto(product);
+    }
+
+
+    @PostMapping("/search")
+    public List<ProductSearchResultDTO> searchProduct(@RequestBody ProductSearchDTO productSearchDTO) {
+        List<Product> product = productService.searchProduct(productSearchDTO);
+        return product.stream().map(ProductSearchResultDTO::convertToDto).collect(Collectors.toList());
     }
 
 

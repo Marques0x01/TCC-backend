@@ -1,37 +1,26 @@
 package com.tcc.backend.controller;
 
+import com.tcc.backend.model.Email;
+import com.tcc.backend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.mail.internet.MimeMessage;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/email")
 public class EmailController {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService sendingEmailService;
 
-    @GetMapping("/send")
-    public String sendMail() {
+    @PostMapping
+    public ResponseEntity<?> restPostLoanRequest(@RequestBody Email mailModel) {
         try {
-            MimeMessage mail = mailSender.createMimeMessage();
-
-            MimeMessageHelper helper = new MimeMessageHelper(mail);
-            helper.setTo( "fabio.marquezzx@gmail.com" );
-            helper.setSubject( "Teste Envio de e-mail" );
-            helper.setText("<p style='color: red'>Hello from Spring Boot Application</p>", true);
-            mailSender.send(mail);
-
-            return "OK";
+            sendingEmailService.sendConfirmationEmail(mailModel);
+            return ResponseEntity.ok().body(mailModel.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return "Erro ao enviar e-mail";
+            return ResponseEntity.ok().body(e.getMessage());
         }
     }
 }
