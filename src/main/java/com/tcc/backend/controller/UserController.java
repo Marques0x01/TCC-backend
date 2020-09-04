@@ -46,6 +46,16 @@ public class UserController {
     return UserViewDTO.convertToDto(response);
   }
 
+  @GetMapping("/change-password/{id}")
+  public void updatePassowrd(@PathVariable Long id, @RequestParam String password, @RequestParam String oldPassword){
+     userService.updatePassword(id, password, oldPassword);
+  }
+
+  @GetMapping("/change-email")
+  public void updateEmail(@RequestParam String oldEmail, @RequestParam String email){
+    userService.updateEmail(oldEmail, email);
+  }
+
   @GetMapping("/confirmation-email")
   public void sendUserVerification(@RequestParam String email){
     User user = userRepository.findByEmail(email);

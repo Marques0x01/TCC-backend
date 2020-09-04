@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 
 @Service
@@ -32,6 +33,10 @@ public class TokenVerificationService {
             userRepository.save(tokenVerification.getUser());
         }
 
+        tokenVerification.setStatus("VERIFIED");
+        tokenVerification.setConfirmedDateTime(LocalDateTime.now());
+        tokenRepo.save(tokenVerification);
+
         return true;
     }
 
@@ -49,7 +54,6 @@ public class TokenVerificationService {
         if(today.isAfter(ChronoLocalDate.from(token.getExpiredDateTime()))){
             return false;
         }
-
 
         return true;
     }

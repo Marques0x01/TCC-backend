@@ -1,6 +1,7 @@
 package com.tcc.backend.service;
 
 import antlr.Token;
+import com.tcc.backend.exception.CustomException;
 import com.tcc.backend.model.Email;
 import com.tcc.backend.model.TokenVerification;
 import com.tcc.backend.model.User;
@@ -8,6 +9,11 @@ import com.tcc.backend.repository.TokenVerificationRepository;
 import com.tcc.backend.repository.UserRepository;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -26,6 +32,10 @@ public class UserService {
   private TokenVerificationRepository tokenVerificationRepository;
   @Autowired
   private EmailService emailService;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
   public List<User> findAll(){
     return userRepository.findAll();
@@ -79,5 +89,37 @@ public class UserService {
     } catch (TemplateException e) {
       e.printStackTrace();
     }
+  }
+
+  public void updatePassword(Long id, String password, String oldPassword) {
+    if(!userRepository.findById(id).isPresent()){
+      throw new EntityNotFoundException("User not found");
+    }
+
+    User user = userRepository.findById(id).get();
+
+    try{
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), oldPassword));
+
+      user.setPassword(passwordEncoder.encode(password));
+      userRepository.save(user);
+    } catch (AuthenticationException e) {
+      throw new CustomException("Invalid email/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+  }
+
+  public void updateEmail(String oldEmail, String email){
+    User user = userRepository.findByEmail(oldEmail);
+
+    if(user == null){
+      throw new EntityNotFoundException("User not found");
+    }
+
+    if(user.getEmail().equals(email)){
+      throw new IllegalArgumentException("Email needs to be different");
+    }
+
+    user.setEmail(email);
+    userRepository.save(user);
   }
 }

@@ -49,6 +49,17 @@ public class AuthService {
         }
     }
 
+    public UserBasicDataDTO renewUser(String email){
+        try {
+            User user = userRepository.findByEmail(email);
+            UserBasicDataDTO userData = UserBasicDataDTO.convertToDto(user);
+            userData.setToken(jwtTokenProvider.createToken(user.getEmail(), userRepository.findByEmail(user.getEmail()).getRoles()));
+            return userData;
+        } catch (AuthenticationException e) {
+            throw new CustomException("Invalid email supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
     public UserBasicDataDTO signup(User user) {
         if (!userRepository.existsByEmail(user.getEmail())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));

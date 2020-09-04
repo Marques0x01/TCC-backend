@@ -25,6 +25,7 @@ public class TokenVerification {
     private String status;
     private LocalDateTime expiredDateTime;
     private LocalDateTime issuedDateTime;
+    private LocalDateTime confirmedDateTime;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
