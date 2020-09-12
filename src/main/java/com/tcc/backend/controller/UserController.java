@@ -56,6 +56,11 @@ public class UserController {
     userService.updateEmail(oldEmail, email);
   }
 
+  @GetMapping("/recover-password")
+  public void recoverPassword(@RequestParam String email, @RequestParam String password){
+    userService.recoverPassword(email, password);
+  }
+
   @GetMapping("/confirmation-email")
   public void sendUserVerification(@RequestParam String email){
     User user = userRepository.findByEmail(email);

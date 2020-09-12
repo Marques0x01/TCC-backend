@@ -51,7 +51,7 @@ public class TokenVerificationService {
             return false;
         }
 
-        if(today.isAfter(ChronoLocalDate.from(token.getExpiredDateTime()))){
+         if(today.isAfter(ChronoLocalDate.from(token.getExpiredDateTime()))){
             return false;
         }
 

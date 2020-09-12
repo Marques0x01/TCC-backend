@@ -122,4 +122,14 @@ public class UserService {
     user.setEmail(email);
     userRepository.save(user);
   }
+
+  public void recoverPassword(String email, String password) {
+    User user = userRepository.findByEmail(email);
+    if(user == null){
+      throw new EntityNotFoundException("User not found");
+    }
+
+    user.setPassword(passwordEncoder.encode(password));
+    userRepository.save(user);
+  }
 }
