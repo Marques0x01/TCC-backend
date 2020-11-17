@@ -25,7 +25,7 @@ public class Product {
     private Double price;
     private Boolean isPhoneVisible;
     private Timestamp creationDate;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Image> images;
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "address_id")

@@ -5,12 +5,14 @@ import com.tcc.backend.dto.ProductRegisterDTO;
 import com.tcc.backend.dto.ProductSearchDTO;
 import com.tcc.backend.model.*;
 import com.tcc.backend.repository.AddressRepository;
+import com.tcc.backend.repository.ImageRepository;
 import com.tcc.backend.repository.ProductRepository;
 import com.tcc.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,6 +26,8 @@ public class ProductService {
     private AddressRepository addressRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
 
     public ProductRegisterDTO saveProduct(ProductRegisterDTO product) throws IOException {
@@ -77,5 +81,16 @@ public class ProductService {
         }
 
         return productRepository.findAll(Specification.where(spec));
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if(product == null){
+            throw new EntityNotFoundException("Product not found");
+        }
+
+        imageRepository.deleteAll(product.getImages());
+        addressRepository.delete(product.getAddress());
+        productRepository.delete(product);
     }
 }

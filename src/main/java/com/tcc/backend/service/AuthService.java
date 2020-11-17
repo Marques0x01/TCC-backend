@@ -3,6 +3,7 @@ package com.tcc.backend.service;
 import com.tcc.backend.dto.UserBasicDataDTO;
 import com.tcc.backend.dto.UserLoginDTO;
 import com.tcc.backend.exception.CustomException;
+import com.tcc.backend.model.LogType;
 import com.tcc.backend.model.Role;
 import com.tcc.backend.model.User;
 import com.tcc.backend.model.UserStatus;
@@ -37,12 +38,16 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private LogService logService;
+
     public UserBasicDataDTO signin(UserLoginDTO userLogin){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
             User user = userRepository.findByEmail(userLogin.getEmail());
             UserBasicDataDTO userData = UserBasicDataDTO.convertToDto(user);
             userData.setToken(jwtTokenProvider.createToken(userLogin.getEmail(), userRepository.findByEmail(userLogin.getEmail()).getRoles()));
+            logService.saveLog(LogType.LOGIN, user.getId());
             return userData;
         } catch (AuthenticationException e) {
             throw new CustomException("Invalid email/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);

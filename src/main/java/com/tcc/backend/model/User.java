@@ -5,11 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class User {
 
   @Id
